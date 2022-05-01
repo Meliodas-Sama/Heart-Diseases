@@ -18,7 +18,7 @@ from collections import OrderedDict
 
 import streamlit as st
 from streamlit.logger import get_logger
-from streamlit.hello import demos
+import Pages
 
 LOGGER = get_logger(__name__)
 
@@ -26,62 +26,37 @@ LOGGER = get_logger(__name__)
 # demo_name -> (demo_function, demo_description)
 DEMOS = OrderedDict(
     [
-        ("—", (demos.intro, None)),
+        ("—", (Pages.intro, None)),
         (
-            "Animation Demo",
+            "Classification Page",
             (
-                demos.fractal_demo,
+                Pages.Classification,
                 """
-This app shows how you can use Streamlit to build cool animations.
-It displays an animated fractal based on the the Julia Set. Use the slider
-to tune different parameters.
+Here you can enter data and see the classification.
 """,
             ),
         ),
         (
-            "Plotting Demo",
+            "Evaluation Page",
             (
-                demos.plotting_demo,
+                Pages.Evaluation,
                 """
-This demo illustrates a combination of plotting and animation with
-Streamlit. We're generating a bunch of random numbers in a loop for around
-5 seconds. Enjoy!
+Here you can choose a model and see it's Evaluation.
 """,
             ),
-        ),
-        (
-            "Mapping Demo",
-            (
-                demos.mapping_demo,
-                """
-This demo shows how to use
-[`st.pydeck_chart`](https://docs.streamlit.io/library/api-reference/charts/st.pydeck_chart)
-to display geospatial data.
-""",
-            ),
-        ),
-        (
-            "DataFrame Demo",
-            (
-                demos.data_frame_demo,
-                """
-This demo shows how to use `st.write` to visualize Pandas DataFrames.
+        )
 
-(Data courtesy of the [UN Data Explorer](http://data.un.org/Explorer.aspx).)
-""",
-            ),
-        ),
     ]
 )
 
 
 def run():
-    demo_name = st.sidebar.selectbox("Choose a demo", list(DEMOS.keys()), 0)
+    demo_name = st.sidebar.selectbox("Choose a Page", list(DEMOS.keys()), 0)
     demo = DEMOS[demo_name][0]
 
     if demo_name == "—":
         show_code = False
-        st.write("# Welcome to Streamlit! 👋")
+        st.write("# Welcome to Our Heart Diseases Website! 👋")
     else:
         show_code = st.sidebar.checkbox("Show code", True)
         st.markdown("# %s" % demo_name)
