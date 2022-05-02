@@ -70,7 +70,7 @@ def Predict (model,X_test):
     for x in X_test:
         (likelihood_of_yes, likelihood_of_no) = model[0]
         for j, val in enumerate(x, start =1):
-            if not val == '?':
+            if not val == '_':
                 if j in [1,3,6]:
                     likelihood_of_yes *= PrD(val, model[j]['pos'][0], model[j]['pos'][1])
                     likelihood_of_no *= PrD(val, model[j]['neg'][0], model[j]['neg'][1])

@@ -13,6 +13,9 @@
 # limitations under the License.
 
 
+from sqlalchemy import null
+
+
 def intro():
     import streamlit as st
 
@@ -48,13 +51,16 @@ def Classification():
     data = []
     original_data_df = pd.read_excel('data/heart_disease_male.xls', true_values=['True', 'yes'], false_values=['no', 'False'] ,skiprows=[1], na_values=['#NAME?', '?']).bfill()
     for column in original_data_df.columns[:-1]:
-        data.append(st.selectbox(column,set(original_data_df[column])))
+        temp = list(set(original_data_df[column]))
+        temp.insert(0, '_')
+        data.append(st.selectbox(column,temp))
     # st.write(data)
     
     with open('.\Models\OurGNB.p','rb') as file:
         gNBModel = pickle.load(file)
     
-    st.write("Disease is:",GaussianNB.Predict(gNBModel, [data]))
+    result, probs = GaussianNB.Predict(gNBModel, [data])
+    st.write("\nAccording to our GNB model the disease is:", result[0],"\n\nYes Prob: ", probs[0][0],", No Prob: ", probs[0][1])
     
 
     
